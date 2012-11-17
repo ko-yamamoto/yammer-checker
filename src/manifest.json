@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "Background Yammer Notifier",
+    "version": "0.1",
+    "description": "yammer の更新を通知します",
+    "background": { "page": "background.html" },
+    // "background": { "scripts": ["core.js"] },
+    "permissions": [
+        "notifications",
+        "https://www.yammer.com/"
+    ]
+}
