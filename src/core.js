@@ -31,13 +31,13 @@ main = function() {
       new_date = Date.parse(head.created_at);
       if (new_date > last_time) {
         last_time = new_date;
-        return notify(type, messeage);
+        return notify();
       }
     });
   });
 };
 
-notify = function(type, msg) {
+notify = function() {
   var notifications;
   notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"));
   notifications.show();

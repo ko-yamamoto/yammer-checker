@@ -30,17 +30,17 @@ main = ->
             localStorage.ls_type = type
             new_date = Date.parse(head.created_at)
 
-            # 新しい投稿があった場合に通知
+            # 新しい投稿があった場合に通知処理開始
             if new_date > last_time
                 last_time = new_date
-                notify(type, messeage)
+                notify()
 
             # console.log new_messeage
 
         )
 
 # 通知を表示
-notify = (type, msg) ->
+notify = () ->
     # console.log(chrome.extension.getURL("Y-logo-300x300.png"))
     # notifications = webkitNotifications.createNotification("/Y-logo-300x300.png", type, msg)
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"))
