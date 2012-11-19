@@ -1,21 +1,21 @@
 # JSON 取得先
 api_url = "https://www.yammer.com/api/v1/messages/my_feed.json"
 # 更新間隔(秒)
-delay_time = 60 * 5
+delay_time = 60 * 3
 # 最終更新時間
 last_time = 0
 
 # 更新確認開始
 check = ->
     console.log "check start"
-    process()
+    main()
     # 次の確認まで待機
     setTimeout(check, delay_time * 1000)
 
 # JSON を取得、更新有無確認、更新があれば通知
-process = ->
+main = ->
 
-    console.log "process start"
+    console.log "main start"
 
     jQuery ->
         $.getJSON(api_url, (response) =>
