@@ -1,47 +1,47 @@
-# Settings
-# 更新間隔(秒)
-delay_seconds = 60 * 5
-
 # JSON 取得先
-target_url = "https://www.yammer.com/api/v1/streams/notifications.json"
-
+api_url = "https://www.yammer.com/api/v1/messages/my_feed.json"
+# 更新間隔(秒)
+delay_time = 60 * 5
 # 最終更新時間
-previous_post_time = 0
+last_time = 0
 
 # 更新確認開始
-check_update = ->
+check = ->
     console.log "check start"
     process()
-    # next check
-    setTimeout(check_update, 1000 * delay_seconds)
+    # 次の確認まで待機
+    setTimeout(check, delay_time * 1000)
 
 # JSON を取得、更新有無確認、更新があれば通知
 process = ->
 
-    console.log "process2"
+    console.log "process start"
+
     jQuery ->
-        $.getJSON(target_url, (response) =>
+        $.getJSON(api_url, (response) =>
             # console.log response
-            items = response.items
+            items = response.messages
             [head, tail...] = items
-            new_messeage = head.message
+            messeage = head.body.parsed
+            type = head.message_type
             new_date = Date.parse(head.created_at)
 
-            if new_date > previous_post_time
-                previous_post_time = new_date
-                notify(new_messeage)
+            # 新しい投稿があった場合に通知
+            if new_date > last_time
+                last_time = new_date
+                notify(type, messeage)
 
-            console.log new_messeage
+            # console.log new_messeage
 
         )
 
 # 通知を表示
-notify = (msg) ->
-    note = webkitNotifications.createNotification(chrome.extension.getURL("Y-logo-300x300.png"), "New!", msg)
-    note.show()
+notify = (type, msg) ->
+    # console.log(chrome.extension.getURL("Y-logo-300x300.png"))
+    notifications = webkitNotifications.createNotification(chrome.extension.getURL("Y-logo-300x300.png"), type, msg)
+    notifications.show()
 
-# 起動
+
+# 初回起動
 $ ->
-    console.log "check start"
-    process()
-    setTimeout(check_update, 1000 * delay_seconds)
+    check()
