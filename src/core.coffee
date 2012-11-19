@@ -4,6 +4,8 @@ api_url = "https://www.yammer.com/api/v1/messages/my_feed.json"
 delay_time = 60 * 3
 # 最終更新時間
 last_time = 0
+# 通知が消えるまでの時間(秒)
+disappear_time = 5
 
 # 更新確認開始
 check = ->
@@ -42,7 +44,10 @@ notify = (type, msg) ->
     # console.log(chrome.extension.getURL("Y-logo-300x300.png"))
     # notifications = webkitNotifications.createNotification("/Y-logo-300x300.png", type, msg)
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"))
+    # 通知表示
     notifications.show()
+    # 一定時間後に通知を消す
+    setTimeout (-> notifications.cancel()), disappear_time * 1000
 
 
 # 初回起動
