@@ -24,6 +24,8 @@ process = function() {
       head = items[0], tail = 2 <= items.length ? __slice.call(items, 1) : [];
       messeage = head.body.parsed;
       type = head.message_type;
+      localStorage.ls_message = messeage;
+      localStorage.ls_type = type;
       new_date = Date.parse(head.created_at);
       if (new_date > last_time) {
         last_time = new_date;
@@ -35,7 +37,7 @@ process = function() {
 
 notify = function(type, msg) {
   var notifications;
-  notifications = webkitNotifications.createNotification(chrome.extension.getURL("Y-logo-300x300.png"), type, msg);
+  notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"));
   return notifications.show();
 };
 
