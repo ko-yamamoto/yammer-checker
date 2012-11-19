@@ -5,3 +5,6 @@ $ ->
 
     $("#message").html(localStorage.ls_message)
     delete localStorage.ls_message
+
+    $("#user_name").html(localStorage.ls_user_name)
+    delete localStorage.ls_user_name
