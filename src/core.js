@@ -35,7 +35,7 @@ process = function() {
 
 notify = function(msg) {
   var note;
-  note = webkitNotifications.createNotification(null, "New!", msg);
+  note = webkitNotifications.createNotification(chrome.extension.getURL("Y-logo-300x300.png"), "New!", msg);
   return note.show();
 };
 

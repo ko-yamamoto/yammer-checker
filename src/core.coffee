@@ -37,7 +37,7 @@ process = ->
 
 # 通知を表示
 notify = (msg) ->
-    note = webkitNotifications.createNotification(null, "New!", msg)
+    note = webkitNotifications.createNotification(chrome.extension.getURL("Y-logo-300x300.png"), "New!", msg)
     note.show()
 
 # 起動

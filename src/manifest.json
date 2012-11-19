@@ -8,5 +8,9 @@
     "permissions": [
         "notifications",
         "https://www.yammer.com/"
-    ]
+    ],
+    "browser_action": {
+        "default_icon": "Y-logo-300x300.png",
+        "name": "Notification"
+    }
 }
