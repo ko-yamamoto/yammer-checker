@@ -55,6 +55,10 @@ main = function() {
 notify = function() {
   var notifications;
   notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"));
+  notifications.addEventListener("click", function() {
+    notifications.cancel();
+    return window.open("https://www.yammer.com/");
+  });
   notifications.show();
   if (localStorage.ls_notification_interval !== "none") {
     return setTimeout((function() {

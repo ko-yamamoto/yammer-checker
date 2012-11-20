@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Yammer Notifier",
-    "version": "0.6",
+    "version": "1.0",
     "description": "yammer の更新を通知します",
     "background": { "page": "background.html" },
     "permissions": [

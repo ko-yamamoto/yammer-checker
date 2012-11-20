@@ -60,9 +60,16 @@ main = ->
 # 通知を表示
 notify = ->
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"))
+
+    # 通知をクリックで yammer を開いて通知を消す
+    notifications.addEventListener "click", () ->
+        notifications.cancel()
+        window.open("https://www.yammer.com/")
+
     # 通知表示
     notifications.show()
 
+    # 通知を消す設定の場合
     if localStorage.ls_notification_interval != "none"
         # 一定時間後に通知を消す
         setTimeout (-> notifications.cancel()), disappear_time * 1000
@@ -73,5 +80,6 @@ $ ->
     check()
 
 
+# 拡張のアイコンクリック時のアクションを設定
 chrome.browserAction.onClicked.addListener (tab) =>
-    chrome.tabs.create {'url': 'https://www.yammer.com/'}, ((tab) ->)
+    chrome.tabs.create {'url': 'https://www.yammer.com/'}, ((tab) ->) # yammer を開く
