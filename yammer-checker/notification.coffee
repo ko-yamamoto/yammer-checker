@@ -8,3 +8,6 @@ $ ->
 
     $("#user_name").html(localStorage.ls_user_name)
     delete localStorage.ls_user_name
+
+    $("#icon_img").attr("src", localStorage.ls_mugshot_url);
+    delete localStorage.ls_mugshot_url

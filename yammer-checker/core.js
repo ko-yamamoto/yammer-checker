@@ -43,6 +43,7 @@
             var _this = this;
             return $.getJSON(user_api_url + user_id + ".json", function(response) {
               localStorage.ls_user_name = response.full_name;
+              localStorage.ls_mugshot_url = response.mugshot_url;
               return notify();
             });
           });

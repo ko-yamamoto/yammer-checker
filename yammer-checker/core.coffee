@@ -52,6 +52,7 @@ main = ->
                     # ユーザ ID からユーザ名を取得
                     $.getJSON user_api_url + user_id + ".json", (response) =>
                         localStorage.ls_user_name = response.full_name
+                        localStorage.ls_mugshot_url = response.mugshot_url
                         # 通知実行
                         notify()
 
