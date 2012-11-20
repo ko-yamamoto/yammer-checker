@@ -10,6 +10,9 @@ disappear_time = 5
 
 # 更新確認開始
 check = ->
+
+    delay_time = 60 * localStorage.ls_update_interval if localStorage.ls_update_interval?
+    disappear_time = localStorage.ls_notification_interval if localStorage.ls_notification_interval?
     # console.log "check start"
     main()
     # 次の確認まで待機
@@ -58,8 +61,10 @@ notify = ->
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"))
     # 通知表示
     notifications.show()
-    # 一定時間後に通知を消す
-    setTimeout (-> notifications.cancel()), disappear_time * 1000
+
+    if localStorage.ls_notification_interval != "none"
+        # 一定時間後に通知を消す
+        setTimeout (-> notifications.cancel()), disappear_time * 1000
 
 
 # 初回起動

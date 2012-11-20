@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <title></title>
+  <script type="text/javascript" src="/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="/options.js"></script>
+
+  <style>
+    #save_button { background: #E4EC5B; width: 100px; text-align: center;}
+    #save_button:hover { background: #45A1CF}
+  </style>
+
+</head>
+<body>
+
+<h3>更新間隔時間</h3>
+  <select id="update_interval">
+    <option value="1">1分</option>
+    <option value="3">3分</option>
+    <option value="5">5分</option>
+    <option value="10">10分</option>
+  </select>
+
+<h3>通知非表示までの時間</h3>
+  <select id="notification_interval">
+    <option value="3">3秒</option>
+    <option value="5">5秒</option>
+    <option value="10">10秒</option>
+    <option value="15">15秒</option>
+    <option value="none">表示したまま</option>
+  </select>
+
+<h3></h3>
+  <div id="save_button">Save</div>
+
+</body>
+</html>

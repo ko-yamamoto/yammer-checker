@@ -14,6 +14,12 @@
   disappear_time = 5;
 
   check = function() {
+    if (localStorage.ls_update_interval != null) {
+      delay_time = 60 * localStorage.ls_update_interval;
+    }
+    if (localStorage.ls_notification_interval != null) {
+      disappear_time = localStorage.ls_notification_interval;
+    }
     main();
     return setTimeout(check, delay_time * 1000);
   };
@@ -49,9 +55,11 @@
     var notifications;
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"));
     notifications.show();
-    return setTimeout((function() {
-      return notifications.cancel();
-    }), disappear_time * 1000);
+    if (localStorage.ls_notification_interval !== "none") {
+      return setTimeout((function() {
+        return notifications.cancel();
+      }), disappear_time * 1000);
+    }
   };
 
   $(function() {
