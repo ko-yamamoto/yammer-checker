@@ -15,5 +15,6 @@
     "web_accessible_resources": [
         "Y-logo-300x300.png"
     ],
-    "homepage_url": "https://github.com/nishikawasasaki/yammer-checker/"
+    "homepage_url": "https://github.com/nishikawasasaki/yammer-checker/",
+    "options_page": "options.html"
 }
