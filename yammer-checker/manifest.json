@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Yammer Notifier",
-    "version": "0.5",
+    "version": "0.6",
     "description": "yammer の更新を通知します",
     "background": { "page": "background.html" },
     "permissions": [
@@ -10,7 +10,8 @@
     ],
     "browser_action": {
         "default_icon": "Y-logo-300x300.png",
-        "name": "Notification"
+        "name": "Notification",
+        "default_title": "yammer-checker"
     },
     "web_accessible_resources": [
         "Y-logo-300x300.png"

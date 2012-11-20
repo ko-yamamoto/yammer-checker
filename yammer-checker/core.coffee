@@ -71,3 +71,7 @@ notify = ->
 # 初回起動
 $ ->
     check()
+
+
+chrome.browserAction.onClicked.addListener (tab) =>
+    chrome.tabs.create {'url': 'https://www.yammer.com/'}, ((tab) ->)
