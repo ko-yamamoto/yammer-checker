@@ -29,6 +29,8 @@ main = ->
             items = response.messages
             # 配列の先頭とそれ以外を分ける
             [head, tail...] = items
+            # web 画面の URL
+            web_url = head.web_url
             # メッセージ本文
             messeage = head.body.parsed
             # 投稿種別
@@ -37,6 +39,7 @@ main = ->
             user_id = head.sender_id
 
             # ローカルストレージへ保存
+            localStorage.ls_web_url = web_url
             localStorage.ls_message = messeage
             localStorage.ls_type = type
 
@@ -61,10 +64,18 @@ main = ->
 notify = ->
     notifications = webkitNotifications.createHTMLNotification(chrome.extension.getURL("notification.html"))
 
-    # 通知をクリックで yammer を開いて通知を消す
+    # 通知をクリックで yammer を開いて通知を消すイベントをセット
     notifications.addEventListener "click", () ->
         notifications.cancel()
-        window.open("https://www.yammer.com/")
+        # 通知クリック時の挙動は設定次第
+        if localStorage.ls_notification_link == "page"
+            # 新着内容のページを開く
+            target_url = localStorage.ls_web_url
+            window.open(target_url)
+        else
+            # yammer TOP を開く
+            window.open("https://www.yammer.com")
+
 
     # 通知表示
     notifications.show()
@@ -80,6 +91,6 @@ $ ->
     check()
 
 
-# 拡張のアイコンクリック時のアクションを設定
+# 拡張のアイコンクリック時のイベントを設定
 chrome.browserAction.onClicked.addListener (tab) =>
     chrome.tabs.create {'url': 'https://www.yammer.com/'}, ((tab) ->) # yammer を開く
