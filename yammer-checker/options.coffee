@@ -7,6 +7,11 @@ $ ->
     # 保存済みの通知非表示時間があれば選択する
     $("#notification_link").val(localStorage.ls_notification_link) if localStorage.ls_notification_link?
 
+    # 登録済み非通知ユーザをセット
+    all_ignore = JSON.parse(localStorage.ls_ignore_email)# if localStorage.ls_ignore_email?
+    # console.log all_ignore.emails
+    update_ignore_list(all_ignore)
+
     $("#save_button").click ->
         # 選択した値を取得
         update_interval = $("#update_interval").val()
@@ -26,8 +31,7 @@ $ ->
     $("#clear_ignore_button").click ->
         # 設定値を削除
         localStorage.ls_ignore_email = JSON.stringify({emails:[]})
-
-        alert("clear")
+        update_ignore_list(null)
 
 
 # 非通知ユーザ登録
@@ -43,14 +47,25 @@ save_ignore = ->
             # 保存済みの json をオブジェクトに
             all_ignore = JSON.parse(localStorage.ls_ignore_email)
 
-            if all_ignore.emails.length != 0
-                # 要素があれば追加
-                all_ignore.emails.push ignore_email
-            else
-                # 要素が無いので空で作成
-                all_ignore = {emails:[]}
+            # 要素追加
+            all_ignore.emails.push ignore_email
 
-            # json で追加
+            # json で保存
             localStorage.ls_ignore_email = JSON.stringify(all_ignore)
 
-        alert("save")
+        # 登録済み非通知ユーザ表示欄更新
+        update_ignore_list(all_ignore)
+
+        # テキストエリアをクリア
+        $("#ignore_email").val("")
+
+        # console.log all_ignore.emails
+
+
+
+# 非通知ユーザ表示更新
+update_ignore_list = (all_ignore) ->
+    $("#ignore_list").empty()
+    if all_ignore?
+        for ignore_email in all_ignore.emails
+            $("#ignore_list").append("<li>" + ignore_email + "</li>")
