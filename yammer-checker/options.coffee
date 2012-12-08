@@ -18,3 +18,39 @@ $ ->
         localStorage.ls_notification_link = notification_link
 
         alert("save")
+
+    $("#save_ignore_button").click ->
+        save_ignore()
+
+
+    $("#clear_ignore_button").click ->
+        # 設定値を削除
+        localStorage.ls_ignore_email = JSON.stringify({emails:[]})
+
+        alert("clear")
+
+
+# 非通知ユーザ登録
+save_ignore = ->
+    # 選択した値を取得
+    ignore_email = $("#ignore_email").val()
+
+    if ignore_email.length != 0
+
+        # 保存済みのアドレスがあれば追加する
+        if localStorage.ls_ignore_email?
+
+            # 保存済みの json をオブジェクトに
+            all_ignore = JSON.parse(localStorage.ls_ignore_email)
+
+            if all_ignore.emails.length != 0
+                # 要素があれば追加
+                all_ignore.emails.push ignore_email
+            else
+                # 要素が無いので空で作成
+                all_ignore = {emails:[]}
+
+            # json で追加
+            localStorage.ls_ignore_email = JSON.stringify(all_ignore)
+
+        alert("save")

@@ -6,14 +6,18 @@
   <script type="text/javascript" src="/options.js"></script>
 
   <style>
-    #save_button { background: #E4EC5B; width: 100px; text-align: center;}
-    #save_button:hover { background: #45A1CF}
+    #save_button, #save_ignore_button, #clear_ignore_button { background: #E4EC5B; width: 100px; text-align: center; margin: 30px 0}
+    #save_button:hover, #save_ignore_button:hover { background: #45A1CF}
+    #clear_ignore_button:hover { background: #cc6666}
+    hr {margin: 40px 0}
   </style>
 
 </head>
 <body>
 
-<h3>更新間隔時間</h3>
+  <h2>基本設定</h2>
+
+  <h3>更新間隔時間</h3>
   <select id="update_interval">
     <option value="1">1分</option>
     <option value="3">3分</option>
@@ -21,7 +25,7 @@
     <option value="10">10分</option>
   </select>
 
-<h3>通知非表示までの時間</h3>
+  <h3>通知非表示までの時間</h3>
   <select id="notification_interval">
     <option value="3">3秒</option>
     <option value="5">5秒</option>
@@ -30,14 +34,29 @@
     <option value="none">表示したまま</option>
   </select>
 
-<h3>通知のリンク先</h3>
+  <h3>通知のリンク先</h3>
   <select id="notification_link">
     <option value="top">Yammer トップ</option>
     <option value="page">通知に該当する記事</option>
   </select>
 
-<h3></h3>
+
   <div id="save_button">Save</div>
+
+
+  <hr/>
+
+
+  <h3>通知しないユーザ</h3>
+
+  <form id="my-form">
+    <input type="text" name="ignore" id="ignore_email" placeholder="メールアドレスを入力してください。"/>
+  </form>
+
+  <div id="save_ignore_button">Save</div>
+  <div id="clear_ignore_button">設定削除</div>
+
+
 
 </body>
 </html>
