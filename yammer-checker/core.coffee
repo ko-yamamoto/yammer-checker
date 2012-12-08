@@ -28,7 +28,7 @@ main = ->
             # console.log response
             items = response.messages
 
-            test(items)
+            proc(items)
 
 
 proc = (items) ->

@@ -30,7 +30,7 @@ main = function() {
     return $.getJSON(feed_api_url, function(response) {
       var items;
       items = response.messages;
-      return test(items);
+      return proc(items);
     });
   });
 };
