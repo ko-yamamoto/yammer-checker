@@ -27,37 +27,59 @@ main = ->
         $.getJSON feed_api_url, (response) =>
             # console.log response
             items = response.messages
-            # 配列の先頭とそれ以外を分ける
-            [head, tail...] = items
-            # web 画面の URL
-            web_url = head.web_url
-            # メッセージ本文
-            messeage = head.body.parsed
-            # 投稿種別
-            type = head.message_type
-            # 投稿ユーザ ID
-            user_id = head.sender_id
 
-            # ローカルストレージへ保存
-            localStorage.ls_web_url = web_url
-            localStorage.ls_message = messeage
-            localStorage.ls_type = type
+            test(items)
 
-            # 新しい更新時間
-            new_date = Date.parse(head.created_at)
 
-            # 新しい投稿があった場合に通知処理開始
-            if new_date > last_time
-                # 最終更新時間退避
-                last_time = new_date
+proc = (items) ->
+    # 配列の先頭とそれ以外を分ける
+    [head, tail...] = items
 
-                jQuery ->
-                    # ユーザ ID からユーザ名を取得
-                    $.getJSON user_api_url + user_id + ".json", (response) =>
-                        localStorage.ls_user_name = response.full_name
-                        localStorage.ls_mugshot_url = response.mugshot_url
-                        # 通知実行
-                        notify()
+    # 投稿ユーザ ID
+    user_id = head.sender_id
+
+    # 新しい更新時間
+    new_date = Date.parse(head.created_at)
+
+
+    # 新しい投稿があった場合に通知処理開始
+    if new_date > last_time
+
+        jQuery ->
+            # ユーザ ID からユーザ名を取得
+            $.getJSON user_api_url + user_id + ".json", (response) =>
+
+                fullname = response.full_name
+                localStorage.ls_user_name = fullname
+                localStorage.ls_mugshot_url = response.mugshot_url
+
+                # 非通知対象なら通知しない
+                if(check_ignore(fullname))
+
+                    # web 画面の URL
+                    web_url = head.web_url
+                    # メッセージ本文
+                    messeage = head.body.parsed
+                    # 投稿種別
+                    type = head.message_type
+
+                    # ローカルストレージへ保存
+                    localStorage.ls_web_url = web_url
+                    localStorage.ls_message = messeage
+                    localStorage.ls_type = type
+
+                    # 最終更新時間退避
+                    last_time = new_date
+
+
+                    # 通知実行
+                    notify()
+
+                else
+                    # 非通知対象だった場合は次のメッセージを繰り上げ
+                    proc(tail)
+
+
 
 
 # 通知を表示
@@ -89,6 +111,17 @@ notify = ->
 # 初回起動
 $ ->
     check()
+
+
+# 非通知対象かどうか
+check_ignore = (fullname) ->
+
+    all_ignore = JSON.parse(localStorage.ls_all_ignore)
+
+    if (all_ignore.fullnames.indexOf(fullname) != -1)
+        false
+    else
+        true
 
 
 # 拡張のアイコンクリック時のイベントを設定
